@@ -236,7 +236,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="drawerSegueIdentifier" value="Menu"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="mainSegueIdentifier" value="Main"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="drawerWidth">
-                            <real key="value" value="250"/>
+                            <real key="value" value="280"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>

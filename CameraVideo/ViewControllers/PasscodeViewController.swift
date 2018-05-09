@@ -9,14 +9,23 @@
 import UIKit
 import SmileLock
 import AVFoundation
+import KYDrawerController
 
-class PasscodeViewController: UIViewController {
+class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if error == nil {
+            UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
+        }
+    }
+    
 
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var passcodeStackView: UIStackView!
     
     var passwordContainerView: PasswordContainerView!
     let kPasswordDigit = 6
+    var outputURL : URL!
     var mStatus : String? = UserDefaults.standard.string(forKey: kCodeStatus) ?? "0"
     var passcode : String? = UserDefaults.standard.string(forKey: kPasscode) ?? ""
     @IBOutlet weak var recordBtn: UIButton!
@@ -83,9 +92,49 @@ class PasscodeViewController: UIViewController {
     }
     
     @IBAction func recordBtnTapped(_ sender: UIButton) {
-        if isRecording {
+        if movieOutput.isRecording == false {
             
-        } else {
+            let connection = movieOutput.connection(with: AVMediaType.video)
+            
+            if (connection?.isVideoStabilizationSupported)! {
+                connection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.auto
+            }
+            
+            if (currentCaptureDevice?.isSmoothAutoFocusSupported)! {
+                do {
+                    try currentCaptureDevice?.lockForConfiguration()
+                    currentCaptureDevice?.isSmoothAutoFocusEnabled = false
+                    currentCaptureDevice?.unlockForConfiguration()
+                } catch {
+                    print("Error setting configuration: \(error)")
+                }
+                
+            }
+            
+            outputURL = tempURL()
+            try? FileManager.default.removeItem(at: outputURL)
+            movieOutput.startRecording(to: outputURL, recordingDelegate: self)
+        }
+        else {
+            stopRecording()
+        }
+
+    }
+    
+    func tempURL() -> URL? {
+        let directory = NSTemporaryDirectory() as NSString
+        
+        if directory != "" {
+            let path = directory.appendingPathComponent(NSUUID().uuidString + ".mp4")
+            return URL(fileURLWithPath: path)
+        }
+        
+        return nil
+    }
+    
+    func stopRecording() {
+        if movieOutput.isRecording == true {
+            movieOutput.stopRecording()
         }
     }
     
@@ -178,7 +227,7 @@ private extension PasscodeViewController {
             UserDefaults.standard.set("1", forKey: kCodeStatus)
             self.viewWillAppear(true)
         } else {
-            let desVC = main.instantiateViewController(withIdentifier: "DrawerNav") as! UINavigationController
+            let desVC = main.instantiateViewController(withIdentifier: "DrawerVC") as! KYDrawerController
             UserDefaults.standard.set("2", forKey: kCodeStatus)
             self.navigationController?.pushViewController(desVC, animated: true)
         }
