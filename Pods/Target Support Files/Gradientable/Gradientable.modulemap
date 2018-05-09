@@ -1,0 +1,6 @@
+framework module Gradientable {
+  umbrella header "Gradientable-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,32 @@
+PODS:
+  - Gradientable (0.0.2)
+  - IQKeyboardManagerSwift (6.0.2)
+  - KYDrawerController (2.0.4)
+  - MBProgressHUD (1.1.0)
+  - SmileLock (3.0.2)
+
+DEPENDENCIES:
+  - Gradientable
+  - IQKeyboardManagerSwift
+  - KYDrawerController (~> 2.0)
+  - MBProgressHUD
+  - SmileLock
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Gradientable
+    - IQKeyboardManagerSwift
+    - KYDrawerController
+    - MBProgressHUD
+    - SmileLock
+
+SPEC CHECKSUMS:
+  Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
+  IQKeyboardManagerSwift: 59d4b0e140bc546c3c76ae5bb35b3dafd10b8172
+  KYDrawerController: cf5839877c442132123e9d482f458821026defdf
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  SmileLock: c03dc80d208b33731606e996f5c3fed61255cf59
+
+PODFILE CHECKSUM: 87430b2d29e340c2f9dd72fa28a59b24818af210
+
+COCOAPODS: 1.5.0
