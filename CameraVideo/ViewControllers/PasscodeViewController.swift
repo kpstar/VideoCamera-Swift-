@@ -16,6 +16,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
             UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
+            //    Upload Video
         }
     }
     
@@ -51,6 +52,14 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         //customize password UI
         passwordContainerView.tintColor = UIColor.black
         passwordContainerView.highlightedColor = UIColor.blue
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(prints), name: notificationDidEnterBackground, object: nil)
+    }
+    
+    @objc func prints() {
+        if movieOutput.isRecording {
+            movieOutput.stopRecording()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +85,11 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             loadCamera(type: 0)
             customBtn()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("Backgou")
+        stopRecording()
     }
     
     override func viewDidAppear(_ animated: Bool) {

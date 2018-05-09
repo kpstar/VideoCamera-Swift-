@@ -14,3 +14,4 @@ let kPassword = "Password"
 let kPasscode = "Passcode"
 let kCodeStatus = "CodeStatus"
 let main : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+let notificationDidEnterBackground = Notification.Name("DIDENTERBACKGROUND")
