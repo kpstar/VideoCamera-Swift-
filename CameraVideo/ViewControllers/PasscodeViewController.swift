@@ -57,13 +57,12 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     @objc func prints() {
-        if movieOutput.isRecording {
-            movieOutput.stopRecording()
-        }
+        stopRecording()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         mStatus = UserDefaults.standard.string(forKey: kCodeStatus) ?? "0"
+        recordBtn.setTitle("REC", for: .normal)
         if mStatus == "0" {
             titleLbl.text = "Register Passcode"
             recordBtn.isHidden = true
@@ -107,7 +106,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     @IBAction func recordBtnTapped(_ sender: UIButton) {
         if movieOutput.isRecording == false {
-            
+            recordBtn.setTitle("STOP", for: .normal)
             let connection = movieOutput.connection(with: AVMediaType.video)
             
             if (connection?.isVideoStabilizationSupported)! {
@@ -130,20 +129,20 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             movieOutput.startRecording(to: outputURL, recordingDelegate: self)
         }
         else {
+            recordBtn.setTitle("REC", for: .normal)
             stopRecording()
         }
 
     }
     
     func tempURL() -> URL? {
-        let directory = NSTemporaryDirectory() as NSString
         
-        if directory != "" {
-            let path = directory.appendingPathComponent(NSUUID().uuidString + ".mp4")
-            return URL(fileURLWithPath: path)
-        }
+        let fm = FileManager.default
         
-        return nil
+        let temp = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let dirctory = temp.appendingPathComponent("output.mp4")
+        
+        return dirctory
     }
     
     func stopRecording() {
@@ -153,6 +152,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     @IBAction func segmentChanged(_ sender: Any) {
+        recordBtn.setTitle("REC", for: .normal)
         loadCamera(type : cameraType.selectedSegmentIndex)
     }
     
