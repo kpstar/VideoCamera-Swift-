@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(prints), name: notificationDidEnterBackground, object: nil)
+    }
+    
+    @objc func prints() {
+        exit(0)
     }
 }

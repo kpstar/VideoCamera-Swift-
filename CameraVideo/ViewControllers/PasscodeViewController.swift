@@ -10,6 +10,7 @@ import UIKit
 import SmileLock
 import AVFoundation
 import KYDrawerController
+import Alamofire
 
 class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
@@ -17,6 +18,8 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         if error == nil {
             UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
             //    Upload Video
+            
+            
         }
     }
     

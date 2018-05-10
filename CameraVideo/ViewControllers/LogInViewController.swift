@@ -84,9 +84,15 @@ class LogInViewController: UIViewController {
                 return
             }
             if statusCode == 200 {
+                let json = response.result.value as! Dictionary<String, Any>
+                let dic_token = json["success"] as! Dictionary<String , Any>
+                let token = dic_token["token"] as! String
+                print(token)
+                
                 UserDefaults.standard.set(username, forKey: kUsername)
                 UserDefaults.standard.set(password, forKey: kPassword)
                 UserDefaults.standard.set("0", forKey: kCodeStatus)
+                UserDefaults.standard.set(token, forKey: kToken)
                 let desVC = main.instantiateViewController(withIdentifier: "Passcode") as! PasscodeViewController
                 self.navigationController?.pushViewController(desVC, animated: true)
             } else {
@@ -139,9 +145,14 @@ class LogInViewController: UIViewController {
                 return
             }
             if statusCode == 200 {
+                let json = response.result.value as! Dictionary<String, Any>
+                let dic_token = json["success"] as! Dictionary<String , Any>
+                let token = dic_token["token"] as! String
+                
                 UserDefaults.standard.set(username, forKey: kUsername)
                 UserDefaults.standard.set(password, forKey: kPassword)
                 UserDefaults.standard.set("0", forKey: kCodeStatus)
+                UserDefaults.standard.set(token, forKey: kToken)
                 let desVC = main.instantiateViewController(withIdentifier: "Passcode") as! PasscodeViewController
                 self.navigationController?.pushViewController(desVC, animated: true)
             } else {

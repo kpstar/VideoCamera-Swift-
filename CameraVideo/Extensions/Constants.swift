@@ -18,3 +18,4 @@ let notificationDidEnterBackground = Notification.Name("DIDENTERBACKGROUND")
 let kWebsiteUrl = "http://192.168.0.218/CameraVideo/public/api"
 let kLoginUrl = "/login"
 let kRegUrl = "/register"
+let kToken = "token"
