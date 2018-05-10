@@ -57,6 +57,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     @objc func prints() {
+        recordBtn.setTitle("REC", for: .normal)
         stopRecording()
     }
     
@@ -87,7 +88,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("Backgou")
         stopRecording()
     }
     
@@ -200,8 +200,12 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         return frontCamera
     }
     
-    func getBackCamera() -> AVCaptureDevice{
-        return AVCaptureDevice.default(for: AVMediaType.video)!
+    func getBackCamera() -> AVCaptureDevice? {
+        var backCamera: AVCaptureDevice?
+        if let videoDevices = AVCaptureDevice.default(for: AVMediaType.video) {
+            backCamera = videoDevices
+        }
+        return backCamera
     }
 }
 

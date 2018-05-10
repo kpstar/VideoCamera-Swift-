@@ -12,6 +12,6 @@ target 'CameraVideo' do
   pod 'MBProgressHUD'
   pod 'Gradientable'
   pod 'KYDrawerController', '~>2.0'
-  
+  pod 'Alamofire', '~> 4.7'
 
 end
