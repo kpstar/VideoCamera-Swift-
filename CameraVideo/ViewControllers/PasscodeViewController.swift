@@ -16,10 +16,10 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
-            UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
+            //UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
             //    Upload Video
             
-            
+            callAPIForUploadVideo(url : outputFileURL)
         }
     }
     
@@ -69,25 +69,90 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         recordBtn.setTitle("REC", for: .normal)
         if mStatus == "0" {
             titleLbl.text = "Register Passcode"
-            recordBtn.isHidden = true
-            cameraSurfaceView.isHidden = true
+            disableUI()
         } else if mStatus == "1" {
             titleLbl.text = "Confirm Passcode"
-            recordBtn.isHidden = true
-            cameraSurfaceView.isHidden = true
+            disableUI()
         } else if mStatus == "2" {
             titleLbl.text = "Enter Passcode"
-            recordBtn.isHidden = false
-            cameraSurfaceView.isHidden = false
-            loadCamera(type: 0)
-            customBtn()
-        } else {
-            titleLbl.text = "Enter Passcode"
-            recordBtn.isHidden = false
-            cameraSurfaceView.isHidden = false
+            enableUI()
             loadCamera(type: 0)
             customBtn()
         }
+    }
+    
+    private func callAPIForUploadVideo(url: URL) {
+        
+        //let videoUrl = kWebsiteUrl + kUploadUrl
+//        let videoUrl = "192.168.0.218/upload.php"
+//        Alamofire.upload(multipartFormData: { (multipartFormData) in
+//            // code
+//            // here you can upload only mp4 video
+//            multipartFormData.append(url, withName: "File1", fileName: "video.mp4", mimeType: "video/mp4")
+//            // here you can upload any type of video
+//            //multipartFormData.append(self.selectedVideoURL!, withName: "File1")
+//            multipartFormData.append(("VIDEO".data(using: String.Encoding.utf8, allowLossyConversion: false))!, withName: "Type")
+//
+//        }, to: videoUrl , encodingCompletion: { (result) in
+//            // code
+//            switch result {
+//            case .success(request: let upload, streamingFromDisk: _, streamFileURL: _):
+//                upload.validate().responseJSON {
+//                    response in
+//                    if response.result.isFailure {
+//                        debugPrint(response)
+//                    } else {
+//                        let result = response.value as! NSDictionary
+//                        print(result)
+//                    }
+//                }
+//            case .failure(let encodingError):
+//                NSLog((encodingError as NSError).localizedDescription)
+//            }
+//        })
+        let parameters = ["user":"Sol", "password":"secret1234"]
+          // Image to upload:
+          let imageToUploadURL = Bundle.main.url(forResource: "tree", withExtension: "png")
+        
+           // Server address (replace this with the address of your own server):
+         let url = "192.168.0.218/upload.php"
+        
+         // Use Alamofire to upload the image
+           Alamofire.upload(
+                   multipartFormData: { multipartFormData in
+                            // On the PHP side you can retrive the image using $_FILES["image"]["tmp_name"]
+                         multipartFormData.append(imageToUploadURL!, withName: "image")
+                       for (key, val) in parameters {
+                                    multipartFormData.append(val.data(using: String.Encoding.utf8)!, withName: key)
+                            }
+                  },
+                  to: url,
+                  encodingCompletion: { encodingResult in
+                    switch encodingResult {
+                    case .success(let upload, _, _):
+                          upload.responseJSON { response in
+                            if let jsonResponse = response.result.value as? [String: Any] {
+                                    print(jsonResponse)
+                              }
+                            }
+                      case .failure(let encodingError):
+                            print(encodingError)
+                        }
+                 }
+            )
+    }
+    
+    private func disableUI () {
+    
+        cameraType.isHidden = true
+        recordBtn.isHidden = true
+        cameraSurfaceView.isHidden = true
+    }
+    
+    private func enableUI () {
+        cameraType.isHidden = false
+        recordBtn.isHidden = false
+        cameraSurfaceView.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
