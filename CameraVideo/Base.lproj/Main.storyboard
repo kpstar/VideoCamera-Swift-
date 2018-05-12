@@ -166,10 +166,6 @@
                                     <action selector="segmentChanged:" destination="PG8-TT-yYC" eventType="valueChanged" id="n6K-vm-dnr"/>
                                 </connections>
                             </segmentedControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36Z-aZ-UGZ">
-                                <rect key="frame" x="0.0" y="20" width="235" height="108.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -180,13 +176,9 @@
                             <constraint firstItem="LO6-W1-I3P" firstAttribute="top" secondItem="RMa-aC-2DL" secondAttribute="bottom" constant="20" id="Iq0-h3-972"/>
                             <constraint firstItem="RMa-aC-2DL" firstAttribute="centerX" secondItem="bbz-Cg-aTk" secondAttribute="centerX" id="MB4-9Y-H5C"/>
                             <constraint firstItem="RMa-aC-2DL" firstAttribute="centerY" secondItem="bbz-Cg-aTk" secondAttribute="centerY" id="W2R-sE-LVR"/>
-                            <constraint firstItem="36Z-aZ-UGZ" firstAttribute="leading" secondItem="NTn-fV-ELd" secondAttribute="leading" id="c3L-Ol-9rj"/>
                             <constraint firstItem="gz7-NJ-6Ue" firstAttribute="trailing" secondItem="NTn-fV-ELd" secondAttribute="trailing" id="cZ0-2t-iGz"/>
-                            <constraint firstItem="ynG-Sn-EHa" firstAttribute="top" secondItem="36Z-aZ-UGZ" secondAttribute="bottom" id="gCj-8a-Ve8"/>
-                            <constraint firstItem="36Z-aZ-UGZ" firstAttribute="top" secondItem="NTn-fV-ELd" secondAttribute="top" id="iZv-bq-RSa"/>
                             <constraint firstItem="A7e-Cx-iBO" firstAttribute="top" secondItem="NTn-fV-ELd" secondAttribute="top" constant="20" id="oGt-LI-86l"/>
                             <constraint firstItem="RMa-aC-2DL" firstAttribute="top" secondItem="ynG-Sn-EHa" secondAttribute="bottom" constant="20" id="oVF-ET-Wle"/>
-                            <constraint firstItem="A7e-Cx-iBO" firstAttribute="leading" secondItem="36Z-aZ-UGZ" secondAttribute="trailing" id="oXB-RE-URJ"/>
                             <constraint firstItem="NTn-fV-ELd" firstAttribute="trailing" secondItem="A7e-Cx-iBO" secondAttribute="trailing" constant="20" id="pi6-Pc-pMG"/>
                             <constraint firstItem="gz7-NJ-6Ue" firstAttribute="leading" secondItem="NTn-fV-ELd" secondAttribute="leading" id="s8X-Fb-D9C"/>
                             <constraint firstItem="gz7-NJ-6Ue" firstAttribute="top" secondItem="bbz-Cg-aTk" secondAttribute="top" id="xci-0k-YIg"/>
@@ -194,7 +186,6 @@
                         <viewLayoutGuide key="safeArea" id="NTn-fV-ELd"/>
                     </view>
                     <connections>
-                        <outlet property="cameraSurfaceView" destination="36Z-aZ-UGZ" id="PV8-dY-Iyx"/>
                         <outlet property="cameraType" destination="A7e-Cx-iBO" id="FFL-O6-H0Y"/>
                         <outlet property="passcodeStackView" destination="RMa-aC-2DL" id="RrQ-MW-8Ef"/>
                         <outlet property="recordBtn" destination="LO6-W1-I3P" id="Tw5-yo-kwJ"/>

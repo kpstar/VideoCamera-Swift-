@@ -11,8 +11,9 @@ import SmileLock
 import AVFoundation
 import KYDrawerController
 import Alamofire
+import CoreLocation
 
-class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
@@ -22,13 +23,13 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             DispatchQueue.global(qos: .background).async {
                 self.callAPIForUploadVideo(url : outputFileURL)
             }
-            
         }
     }
     
-
+    var location : CLLocation?
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var passcodeStackView: UIStackView!
+    var locationManager: CLLocationManager!
     
     var passwordContainerView: PasswordContainerView!
     let kPasswordDigit = 6
@@ -38,13 +39,11 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet weak var cameraType: UISegmentedControl!
     var isRecording = false
-    @IBOutlet weak var cameraSurfaceView: UIView!
     
     var tempImage: UIImageView?
     
     var captureSession: AVCaptureSession?
     var movieOutput = AVCaptureMovieFileOutput()
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var currentCaptureDevice: AVCaptureDevice?
     
     override func viewDidLoad() {
@@ -60,6 +59,16 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         passwordContainerView.highlightedColor = UIColor.blue
         
         NotificationCenter.default.addObserver(self, selector: #selector(prints), name: notificationDidEnterBackground, object: nil)
+        
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        
     }
     
     @objc func prints() {
@@ -86,14 +95,9 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     private func callAPIForUploadVideo(url: URL) {
         
-        let url_str = kVideoControlUrl + kUploadUrl
+        //let url_str = kVideoControlUrl + kUploadUrl
         
         let data: Data? = FileManager.default.contents(atPath: url.path)
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bear " + UserDefaults.standard.string(forKey: kToken)!,
-            "Content-type": "multipart/form-data"
-        ]
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
 //            for (key, value) in parameters {
@@ -129,25 +133,17 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
         cameraType.isHidden = true
         recordBtn.isHidden = true
-        cameraSurfaceView.isHidden = true
     }
     
     private func enableUI () {
         cameraType.isHidden = false
         recordBtn.isHidden = false
-        cameraSurfaceView.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         stopRecording()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if mStatus == "2" {
-            videoPreviewLayer!.frame =  self.cameraSurfaceView.bounds
-        }
-    }
-    
+
     private func customBtn() {
         recordBtn.layer.cornerRadius = 40
         recordBtn.layer.backgroundColor = UIColor.red.cgColor
@@ -217,6 +213,11 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         
         currentCaptureDevice = (type == 1 ? getFrontCamera() : getBackCamera())
         
+        if currentCaptureDevice == nil {
+            self.displayMyAlertMessage(titleMsg: "Error", alertMsg: "No camera device")
+            return 
+        }
+        
         do {
             input = try AVCaptureDeviceInput(device: currentCaptureDevice!)
         } catch let error1 as NSError {
@@ -232,11 +233,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             captureSession!.addInput(input)
             if captureSession!.canAddOutput(movieOutput) {
                 captureSession!.addOutput(movieOutput)
-                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-                //self.cameraPreviewSurface.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-                self.cameraSurfaceView.layer.addSublayer(videoPreviewLayer!)
                 DispatchQueue.main.async {
                     self.captureSession!.startRunning()
                 }
