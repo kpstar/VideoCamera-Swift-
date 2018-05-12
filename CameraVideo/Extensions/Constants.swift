@@ -16,6 +16,7 @@ let kCodeStatus = "CodeStatus"
 let main : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 let notificationDidEnterBackground = Notification.Name("DIDENTERBACKGROUND")
 let kWebsiteUrl = "http://192.168.0.218/VideoCamera/public/api"
+let kVideoControlUrl = "http://192.168.0.218/api"
 //let kWebsiteUrl = "http://18.221.221.116/api"
 let kLoginUrl = "/login"
 let kRegUrl = "/register"

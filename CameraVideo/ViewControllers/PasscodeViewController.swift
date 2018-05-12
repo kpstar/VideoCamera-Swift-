@@ -18,8 +18,11 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         if error == nil {
             //UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
             //    Upload Video
+            print("File Uploading")
+            DispatchQueue.global(qos: .background).async {
+                self.callAPIForUploadVideo(url : outputFileURL)
+            }
             
-            callAPIForUploadVideo(url : outputFileURL)
         }
     }
     
@@ -83,63 +86,43 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     private func callAPIForUploadVideo(url: URL) {
         
-        //let videoUrl = kWebsiteUrl + kUploadUrl
-//        let videoUrl = "192.168.0.218/upload.php"
-//        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            // code
-//            // here you can upload only mp4 video
-//            multipartFormData.append(url, withName: "File1", fileName: "video.mp4", mimeType: "video/mp4")
-//            // here you can upload any type of video
-//            //multipartFormData.append(self.selectedVideoURL!, withName: "File1")
-//            multipartFormData.append(("VIDEO".data(using: String.Encoding.utf8, allowLossyConversion: false))!, withName: "Type")
-//
-//        }, to: videoUrl , encodingCompletion: { (result) in
-//            // code
-//            switch result {
-//            case .success(request: let upload, streamingFromDisk: _, streamFileURL: _):
-//                upload.validate().responseJSON {
-//                    response in
-//                    if response.result.isFailure {
-//                        debugPrint(response)
-//                    } else {
-//                        let result = response.value as! NSDictionary
-//                        print(result)
-//                    }
-//                }
-//            case .failure(let encodingError):
-//                NSLog((encodingError as NSError).localizedDescription)
+        let url_str = kVideoControlUrl + kUploadUrl
+        
+        let data: Data? = FileManager.default.contents(atPath: url.path)
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bear " + UserDefaults.standard.string(forKey: kToken)!,
+            "Content-type": "multipart/form-data"
+        ]
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+//            for (key, value) in parameters {
+//                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
 //            }
-//        })
-        let parameters = ["user":"Sol", "password":"secret1234"]
-          // Image to upload:
-          let imageToUploadURL = Bundle.main.url(forResource: "tree", withExtension: "png")
+            
+        multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
+            
+        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
+            DispatchQueue.main.async {
+                print(result)
+            }
+        }
+
+    }
+    
+    private func details () {
         
-           // Server address (replace this with the address of your own server):
-         let url = "192.168.0.218/upload.php"
+        let params: [String: Any] = [
+            "name": "abcde",
+            "password": "password!"
+        ]
         
-         // Use Alamofire to upload the image
-           Alamofire.upload(
-                   multipartFormData: { multipartFormData in
-                            // On the PHP side you can retrive the image using $_FILES["image"]["tmp_name"]
-                         multipartFormData.append(imageToUploadURL!, withName: "image")
-                       for (key, val) in parameters {
-                                    multipartFormData.append(val.data(using: String.Encoding.utf8)!, withName: key)
-                            }
-                  },
-                  to: url,
-                  encodingCompletion: { encodingResult in
-                    switch encodingResult {
-                    case .success(let upload, _, _):
-                          upload.responseJSON { response in
-                            if let jsonResponse = response.result.value as? [String: Any] {
-                                    print(jsonResponse)
-                              }
-                            }
-                      case .failure(let encodingError):
-                            print(encodingError)
-                        }
-                 }
-            )
+        
+        let url: String = kWebsiteUrl + kDetail
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: [:]).responseJSON { response in
+            
+        }
     }
     
     private func disableUI () {
@@ -208,7 +191,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         let fm = FileManager.default
         
         let temp = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dirctory = temp.appendingPathComponent("output.mp4")
+        let dirctory = temp.appendingPathComponent("video.mp4")
         
         return dirctory
     }
