@@ -65,10 +65,14 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             locationManager = CLLocationManager()
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
         }
         
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        location = locations.last! as CLLocation
+        print(location ?? "<#default value#>")
     }
     
     @objc func prints() {
@@ -215,7 +219,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         
         if currentCaptureDevice == nil {
             self.displayMyAlertMessage(titleMsg: "Error", alertMsg: "No camera device")
-            return 
+            return
         }
         
         do {
