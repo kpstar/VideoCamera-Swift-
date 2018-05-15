@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084A5D6F20A9545300BA233F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084A5D6E20A9545300BA233F /* PlayerViewController.swift */; };
+		084A5D7420AAB9F900BA233F /* camera_start.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7320AAB9F900BA233F /* camera_start.mp3 */; };
+		084A5D7620AABA0200BA233F /* camera_end.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7520AABA0200BA233F /* camera_end.mp3 */; };
+		084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7720AABA0A00BA233F /* camera_end.wav */; };
+		084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7920AABA1100BA233F /* camera_start.wav */; };
 		08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E28E20A4D67E006F42FC /* MenuCell.swift */; };
 		08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E29020A51F96006F42FC /* UIColorExtension.swift */; };
 		08C4E29720A58529006F42FC /* tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C4E29620A58529006F42FC /* tree.png */; };
@@ -25,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		084A5D6E20A9545300BA233F /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		084A5D7320AAB9F900BA233F /* camera_start.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = camera_start.mp3; sourceTree = "<group>"; };
+		084A5D7520AABA0200BA233F /* camera_end.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = camera_end.mp3; sourceTree = "<group>"; };
+		084A5D7720AABA0A00BA233F /* camera_end.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_end.wav; sourceTree = "<group>"; };
+		084A5D7920AABA1100BA233F /* camera_start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_start.wav; sourceTree = "<group>"; };
 		08C4E28E20A4D67E006F42FC /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		08C4E29020A51F96006F42FC /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		08C4E29620A58529006F42FC /* tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.png; sourceTree = "<group>"; };
@@ -59,6 +69,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084A5D7220AAB9E500BA233F /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				084A5D7920AABA1100BA233F /* camera_start.wav */,
+				084A5D7720AABA0A00BA233F /* camera_end.wav */,
+				084A5D7520AABA0200BA233F /* camera_end.mp3 */,
+				084A5D7320AAB9F900BA233F /* camera_start.mp3 */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		08C4E28D20A4D64E006F42FC /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +110,7 @@
 		08C5A1E720A096500040A2A9 /* CameraVideo */ = {
 			isa = PBXGroup;
 			children = (
+				084A5D7220AAB9E500BA233F /* Sound */,
 				08C4E29620A58529006F42FC /* tree.png */,
 				08C4E28D20A4D64E006F42FC /* Custom */,
 				08C5A20220A09DBC0040A2A9 /* Extensions */,
@@ -109,6 +131,7 @@
 				08C5A1FE20A097290040A2A9 /* PasscodeViewController.swift */,
 				08C5A20020A097340040A2A9 /* MainViewController.swift */,
 				08C5A22720A21C250040A2A9 /* MenuViewController.swift */,
+				084A5D6E20A9545300BA233F /* PlayerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -208,10 +231,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084A5D7420AAB9F900BA233F /* camera_start.mp3 in Resources */,
 				08C5A1F320A096520040A2A9 /* LaunchScreen.storyboard in Resources */,
+				084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */,
 				08C5A1F020A096520040A2A9 /* Assets.xcassets in Resources */,
 				08C5A1EE20A096500040A2A9 /* Main.storyboard in Resources */,
 				08C4E29720A58529006F42FC /* tree.png in Resources */,
+				084A5D7620AABA0200BA233F /* camera_end.mp3 in Resources */,
+				084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +307,7 @@
 				08C5A20420A09DE50040A2A9 /* UIViewController+Extension.swift in Sources */,
 				08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */,
 				08C5A20120A097340040A2A9 /* MainViewController.swift in Sources */,
+				084A5D6F20A9545300BA233F /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,8 +453,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BBJD87GN28;
+				DEVELOPMENT_TEAM = E4PA39JM22;
 				INFOPLIST_FILE = CameraVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,8 +473,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BBJD87GN28;
+				DEVELOPMENT_TEAM = E4PA39JM22;
 				INFOPLIST_FILE = CameraVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

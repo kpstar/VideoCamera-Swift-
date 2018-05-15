@@ -60,6 +60,8 @@ extension UIColor {
     class var colorCardVisit: UIColor {
         return UIColor(red: 0 / 255.0, green: 178 / 255.0, blue: 0 / 255.0, alpha: 1)
     }
-    
+    class var colorGreen: UIColor {
+        return UIColor(red: 185 / 255.0, green: 254 / 255.0, blue: 255 / 255.0, alpha: 1)
+    }
 }
 

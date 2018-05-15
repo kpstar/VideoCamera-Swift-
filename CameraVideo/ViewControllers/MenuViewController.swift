@@ -12,6 +12,7 @@ import Gradientable
 
 class MenuViewController: UIViewController {
 
+    @IBOutlet weak var titleView: GradientableView!
     @IBOutlet weak var logoView: GradientableView!
     @IBOutlet weak var menuTbl: UITableView!
     var menuList = [MenuType]()
@@ -24,10 +25,13 @@ class MenuViewController: UIViewController {
         menuTbl.dataSource = self
         menuTbl.delegate = self
         
-        let logoGradient = GradientableOptions(colors: [UIColor.primary, UIColor.colorAccent, UIColor.primary], locations: nil, direction: GradientableOptionsDirection.bottomRightToTopLeft)
+        let logoGradient = GradientableOptions(colors: [UIColor.colorGreen, UIColor.colorAccent, UIColor.colorGreen], locations: nil, direction: GradientableOptionsDirection.bottomRightToTopLeft)
         logoView.set(options: logoGradient)
         
-        menuList.append(MenuType(name: "Change Passcode", image: UIImage(named: "login_icon")))
+        titleView.backgroundColor = UIColor.primary
+        
+        menuList.append(MenuType(name: "Change Passcode", image: UIImage(named: "passcode")))
+        menuList.append(MenuType(name: "Sign Out", image: UIImage(named: "logout")))
     }
     
     @objc func prints() {
@@ -65,6 +69,11 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
 //            drawer?.setDrawerState(.closed, animated: true)
             break
         case 1:
+            let domain = Bundle.main.bundleIdentifier!
+            UserDefaults.standard.removePersistentDomain(forName: domain)
+            UserDefaults.standard.set("", forKey: kUsername)
+            UserDefaults.standard.synchronize()
+            self.navigationController?.popToRootViewController(animated: true)
             break
         default:
             break

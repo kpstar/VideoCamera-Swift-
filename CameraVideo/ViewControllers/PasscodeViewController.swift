@@ -15,21 +15,13 @@ import CoreLocation
 
 class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate {
     
-    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        if error == nil {
-            //UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
-            //    Upload Video
-            print("File Uploading")
-            DispatchQueue.global(qos: .background).async {
-                self.callAPIForUploadVideo(url : outputFileURL)
-            }
-        }
-    }
-    
+    @IBOutlet weak var videoPreview: UIStackView!
+    @IBOutlet weak var videoLayout: UIView!
     var location : CLLocation?
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var passcodeStackView: UIStackView!
-    var locationManager: CLLocationManager!
+    var locationManager = CLLocationManager()
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
     var passwordContainerView: PasswordContainerView!
     let kPasswordDigit = 6
@@ -39,13 +31,18 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet weak var cameraType: UISegmentedControl!
     var isRecording = false
-    
+    var player: AVAudioPlayer?
+    @IBOutlet weak var lblTimer: UILabel!
+    var counter = 0
     var tempImage: UIImageView?
     
     var captureSession: AVCaptureSession?
     var movieOutput = AVCaptureMovieFileOutput()
     var currentCaptureDevice: AVCaptureDevice?
-    
+    var timer = Timer()
+    let ceo : CLGeocoder = CLGeocoder()
+    var addressString : String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,19 +57,17 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         
         NotificationCenter.default.addObserver(self, selector: #selector(prints), name: notificationDidEnterBackground, object: nil)
         
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-        }
-        
     }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.last! as CLLocation
-        print(location ?? "<#default value#>")
+
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if error == nil {
+            //UISaveVideoAtPathToSavedPhotosAlbum(outputURL.path, nil, nil, nil)
+            
+            //    Upload Video
+//            DispatchQueue.global(qos: .background).async {
+//                self.callAPIForUploadVideo(url : outputFileURL)
+//            }
+        }
     }
     
     @objc func prints() {
@@ -83,6 +78,8 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     override func viewWillAppear(_ animated: Bool) {
         mStatus = UserDefaults.standard.string(forKey: kCodeStatus) ?? "0"
         recordBtn.setTitle("REC", for: .normal)
+        
+        locationManager.requestAlwaysAuthorization()
         if mStatus == "0" {
             titleLbl.text = "Register Passcode"
             disableUI()
@@ -93,29 +90,113 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             titleLbl.text = "Enter Passcode"
             enableUI()
             loadCamera(type: 0)
+            cameraType.selectedSegmentIndex = 0
             customBtn()
         }
+        
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+            location = locationManager.location
+            ceo.reverseGeocodeLocation(location!, completionHandler:
+                {(placemarks, error) in
+                    if (error != nil)
+                    {
+                        print("reverse geodcode fail: \(error!.localizedDescription)")
+                    }
+                    let pm = placemarks! as [CLPlacemark]
+                    
+                    if pm.count > 0 {
+                        let pm = placemarks![0]
+                        
+                        if pm.country != nil {
+                            self.addressString = self.addressString + pm.country! + "_"
+                        }
+                        if pm.locality != nil {
+                            self.self.addressString = self.addressString + pm.locality! + "_"
+                        }
+                        if pm.thoroughfare != nil {
+                            self.self.addressString = self.addressString + pm.thoroughfare! + "_"
+                        }
+                        if pm.subLocality != nil {
+                            self.addressString = self.addressString + pm.subLocality!
+                        }
+                        self.addressString = self.addressString + "__"
+                        print(self.addressString)
+                    }
+            })
+        }
+        
+        videoPreview.isHidden = true
+        passcodeStackView.isHidden = false
+        videoPreviewLayer?.frame = self.videoLayout.bounds
     }
     
-    private func callAPIForUploadVideo(url: URL) {
-        
-        //let url_str = kVideoControlUrl + kUploadUrl
-        
-        let data: Data? = FileManager.default.contents(atPath: url.path)
-        
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            for (key, value) in parameters {
+//    private func callAPIForUploadVideo(url: URL) {
+//
+//        //let url_str = kVideoControlUrl + kUploadUrl
+//
+//        let data: Data? = FileManager.default.contents(atPath: url.path)
+//        let asset = AVURLAsset(url: URL(fileURLWithPath: url.path), options: nil)
+//        let imgGenerator = AVAssetImageGenerator(asset: asset)
+//        var cgImage: CGImage?
+//        do {
+//            cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+//        } catch {
+//
+//        }
+//
+//        let date  = Date()
+//
+//        let dateFormatterGet = DateFormatter()
+//        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//
+//        let date_str = dateFormatterGet.string(from: date)
+//
+//        let params : [String: String] = [
+//            "latitude" : "49.839746",//String(format: "%f", (location?.coordinate.latitude)!),
+//            "longitude" : "24.029798",//String(format: "%f", (location?.coordinate.longitude)!),
+//            "date" : date_str
+//        ]
+//
+//
+//        // !! check the error before proceeding
+//        let uiImage = UIImage.init(cgImage: cgImage!)
+//        let data_thum: Data = UIImagePNGRepresentation(uiImage)!
+//
+//        Alamofire.upload(multipartFormData: { (multipartFormData) in
+//            for (key, value) in params {
 //                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
 //            }
-            
-        multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
-            
-        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
-            DispatchQueue.main.async {
-                print(result)
-            }
+//
+//            multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
+//            multipartFormData.append(data_thum, withName: "image", fileName: "image.png", mimeType: "image/png")
+//
+//        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
+//            DispatchQueue.main.async {
+//                print(result)
+//            }
+//        }
+//    }
+    
+    @objc func timerAction() {
+        counter += 1
+        
+        var tst = String(counter % 60)
+        var tst1 = String(counter / 60)
+        if tst.count == 1 {
+            tst = "0" + tst
         }
-
+        if tst1.count == 1 {
+            tst1 = "0" + tst1
+        }
+        
+        
+        lblTimer.text = "\(tst1)" + ":" + "\(tst)"
+        
+        //lblTimer.text = "\(counter)"
     }
     
     private func details () {
@@ -157,6 +238,11 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     @IBAction func recordBtnTapped(_ sender: UIButton) {
         if movieOutput.isRecording == false {
+            videoPreview.isHidden = false
+            passcodeStackView.isHidden = true
+            playStartSound()
+            timer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
             recordBtn.setTitle("STOP", for: .normal)
             let connection = movieOutput.connection(with: AVMediaType.video)
             
@@ -180,7 +266,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             movieOutput.startRecording(to: outputURL, recordingDelegate: self)
         }
         else {
-            recordBtn.setTitle("REC", for: .normal)
+            
             stopRecording()
         }
 
@@ -191,14 +277,65 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         let fm = FileManager.default
         
         let temp = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dirctory = temp.appendingPathComponent("video.mp4")
         
-        return dirctory
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date / server String
+        formatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
+        
+        let filename = addressString + formatter.string(from: Date()) + ".mp4"
+        
+        let directory = temp.appendingPathComponent(filename)
+        print(directory)
+        return directory
     }
     
     func stopRecording() {
+        
         if movieOutput.isRecording == true {
+            passcodeStackView.isHidden = false
+            timer.invalidate()
+            counter = 0
+            lblTimer.text = "00:00"
+            videoPreview.isHidden = true
+            playEndSound()
+            recordBtn.setTitle("REC", for: .normal)
             movieOutput.stopRecording()
+        }
+    }
+    
+    func playStartSound() {
+        guard let url = Bundle.main.url(forResource: "camera_start", withExtension: "mp3") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func playEndSound() {
+        guard let url = Bundle.main.url(forResource: "camera_end", withExtension: "mp3") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
@@ -237,6 +374,10 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             captureSession!.addInput(input)
             if captureSession!.canAddOutput(movieOutput) {
                 captureSession!.addOutput(movieOutput)
+                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+                self.videoLayout.layer.addSublayer(videoPreviewLayer!)
                 DispatchQueue.main.async {
                     self.captureSession!.startRunning()
                 }

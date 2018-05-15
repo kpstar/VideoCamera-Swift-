@@ -99,6 +99,9 @@ class LogInViewController: UIViewController {
                 self.displayMyAlertMessage(titleMsg: "Error", alertMsg: "Username or Password is incorrect.")
             }
         }
+        
+        usernameTxt.text = ""
+        passwordTxt.text = ""
     }
     
     @IBAction func registerBtnTapped(_ sender: UIButton) {
@@ -159,5 +162,7 @@ class LogInViewController: UIViewController {
                 self.displayMyAlertMessage(titleMsg: "Error", alertMsg: "Username already Exists")
             }
         }
+        usernameTxt.text = ""
+        passwordTxt.text = ""
     }
 }
