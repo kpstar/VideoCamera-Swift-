@@ -23,3 +23,9 @@ let kRegUrl = "/register"
 let kDetail = "/details"
 let kUploadUrl = "/uploadvideo"
 let kToken = "token"
+
+struct VideoInfo {
+    var time: String
+    var address: String
+    var image: UIImage
+}

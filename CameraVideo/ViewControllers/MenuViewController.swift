@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Gradientable
+import KYDrawerController
 
 class MenuViewController: UIViewController {
 
@@ -16,6 +17,12 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var logoView: GradientableView!
     @IBOutlet weak var menuTbl: UITableView!
     var menuList = [MenuType]()
+    
+    var drawer: KYDrawerController? {
+        get {
+            return self.parent as? KYDrawerController
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +35,9 @@ class MenuViewController: UIViewController {
         let logoGradient = GradientableOptions(colors: [UIColor.colorGreen, UIColor.colorAccent, UIColor.colorGreen], locations: nil, direction: GradientableOptionsDirection.bottomRightToTopLeft)
         logoView.set(options: logoGradient)
         
-        titleView.backgroundColor = UIColor.primary
+        let logo1 = GradientableOptions(colors: [UIColor.primary, UIColor.colorAccent, UIColor.primary], locations: nil, direction: GradientableOptionsDirection.bottomRightToTopLeft)
+        
+        titleView.set(options: logo1)
         
         menuList.append(MenuType(name: "Change Passcode", image: UIImage(named: "passcode")))
         menuList.append(MenuType(name: "Sign Out", image: UIImage(named: "logout")))

@@ -19,6 +19,7 @@ class LogInViewController: UIViewController {
     
     let mUsername : String? = UserDefaults.standard.string(forKey: kUsername) ?? ""
     let mPassword : String? = UserDefaults.standard.string(forKey: kPassword) ?? ""
+    let mPasscode : String? = UserDefaults.standard.string(forKey: kPasscode) ?? ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +39,9 @@ class LogInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        
-        if mUsername != "" {
+        let mUser : String? = UserDefaults.standard.string(forKey: kUsername) ?? ""
+        let mPass : String? = UserDefaults.standard.string(forKey: kPasscode) ?? ""
+        if mUser != "" && mPass != "" {
             let desVC = main.instantiateViewController(withIdentifier: "Passcode") as! PasscodeViewController
             UserDefaults.standard.set("2", forKey: kCodeStatus)
             self.navigationController?.pushViewController(desVC, animated: false)

@@ -94,41 +94,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             customBtn()
         }
         
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-            location = locationManager.location
-            ceo.reverseGeocodeLocation(location!, completionHandler:
-                {(placemarks, error) in
-                    if (error != nil)
-                    {
-                        print("reverse geodcode fail: \(error!.localizedDescription)")
-                    }
-                    let pm = placemarks! as [CLPlacemark]
-                    
-                    if pm.count > 0 {
-                        let pm = placemarks![0]
-                        
-                        if pm.country != nil {
-                            self.addressString = self.addressString + pm.country! + "_"
-                        }
-                        if pm.locality != nil {
-                            self.self.addressString = self.addressString + pm.locality! + "_"
-                        }
-                        if pm.thoroughfare != nil {
-                            self.self.addressString = self.addressString + pm.thoroughfare! + "_"
-                        }
-                        if pm.subLocality != nil {
-                            self.addressString = self.addressString + pm.subLocality!
-                        }
-                        self.addressString = self.addressString + "__"
-                        print(self.addressString)
-                    }
-            })
-        }
-        
         videoPreview.isHidden = true
         passcodeStackView.isHidden = false
         videoPreviewLayer?.frame = self.videoLayout.bounds
@@ -238,6 +203,49 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
     @IBAction func recordBtnTapped(_ sender: UIButton) {
         if movieOutput.isRecording == false {
+            
+            if (CLLocationManager.locationServicesEnabled())
+            {
+                switch CLLocationManager.authorizationStatus() {
+                case .authorizedAlways, .authorizedWhenInUse:
+                    locationManager.delegate = self
+                    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                    locationManager.startUpdatingLocation()
+                    location = locationManager.location
+                    ceo.reverseGeocodeLocation(location!, completionHandler:
+                        {(placemarks, error) in
+                            if (error != nil)
+                            {
+                                print("reverse geodcode fail: \(error!.localizedDescription)")
+                            }
+                            let pm = placemarks! as [CLPlacemark]
+                    
+                            if pm.count > 0 {
+                                let pm = placemarks![0]
+                    
+                                if pm.country != nil {
+                                    self.addressString = self.addressString + pm.country! + "_"
+                                }
+                                if pm.locality != nil {
+                                    self.self.addressString = self.addressString + pm.locality! + "_"
+                                }
+                                if pm.thoroughfare != nil {
+                                    self.self.addressString = self.addressString + pm.thoroughfare! + "_"
+                                }
+                                if pm.subLocality != nil {
+                                    self.addressString = self.addressString + pm.subLocality!
+                                }
+                                self.addressString = self.addressString + "__"
+                                print(self.addressString)
+                            }
+                        })
+                    break
+                case .notDetermined, .restricted, .denied:
+                    self.addressString = "noaddress__"
+                    break
+                }
+            }
+            
             videoPreview.isHidden = false
             passcodeStackView.isHidden = true
             playStartSound()
@@ -375,7 +383,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             if captureSession!.canAddOutput(movieOutput) {
                 captureSession!.addOutput(movieOutput)
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resize
                 videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 self.videoLayout.layer.addSublayer(videoPreviewLayer!)
                 DispatchQueue.main.async {

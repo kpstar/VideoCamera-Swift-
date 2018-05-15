@@ -12,6 +12,7 @@
 		084A5D7620AABA0200BA233F /* camera_end.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7520AABA0200BA233F /* camera_end.mp3 */; };
 		084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7720AABA0A00BA233F /* camera_end.wav */; };
 		084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7920AABA1100BA233F /* camera_start.wav */; };
+		084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */; };
 		08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E28E20A4D67E006F42FC /* MenuCell.swift */; };
 		08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E29020A51F96006F42FC /* UIColorExtension.swift */; };
 		08C4E29720A58529006F42FC /* tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C4E29620A58529006F42FC /* tree.png */; };
@@ -35,6 +36,7 @@
 		084A5D7520AABA0200BA233F /* camera_end.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = camera_end.mp3; sourceTree = "<group>"; };
 		084A5D7720AABA0A00BA233F /* camera_end.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_end.wav; sourceTree = "<group>"; };
 		084A5D7920AABA1100BA233F /* camera_start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_start.wav; sourceTree = "<group>"; };
+		084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		08C4E28E20A4D67E006F42FC /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		08C4E29020A51F96006F42FC /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		08C4E29620A58529006F42FC /* tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.png; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				08C4E28E20A4D67E006F42FC /* MenuCell.swift */,
 				08C4E29020A51F96006F42FC /* UIColorExtension.swift */,
+				084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			files = (
 				08C5A1FD20A0971B0040A2A9 /* LogInViewController.swift in Sources */,
 				08C5A20620A09E820040A2A9 /* Constants.swift in Sources */,
+				084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */,
 				08C5A1FF20A097290040A2A9 /* PasscodeViewController.swift in Sources */,
 				08C5A22820A21C250040A2A9 /* MenuViewController.swift in Sources */,
 				08C5A1E920A096500040A2A9 /* AppDelegate.swift in Sources */,
