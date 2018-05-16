@@ -151,49 +151,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     
 //    private func callAPIForUploadVideo(url: URL) {
 //
-//        //let url_str = kVideoControlUrl + kUploadUrl
-//
-//        let data: Data? = FileManager.default.contents(atPath: url.path)
-//        let asset = AVURLAsset(url: URL(fileURLWithPath: url.path), options: nil)
-//        let imgGenerator = AVAssetImageGenerator(asset: asset)
-//        var cgImage: CGImage?
-//        do {
-//            cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-//        } catch {
-//
-//        }
-//
-//        let date  = Date()
-//
-//        let dateFormatterGet = DateFormatter()
-//        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//
-//        let date_str = dateFormatterGet.string(from: date)
-//
-//        let params : [String: String] = [
-//            "latitude" : "49.839746",//String(format: "%f", (location?.coordinate.latitude)!),
-//            "longitude" : "24.029798",//String(format: "%f", (location?.coordinate.longitude)!),
-//            "date" : date_str
-//        ]
-//
-//
-//        // !! check the error before proceeding
-//        let uiImage = UIImage.init(cgImage: cgImage!)
-//        let data_thum: Data = UIImagePNGRepresentation(uiImage)!
-//
-//        Alamofire.upload(multipartFormData: { (multipartFormData) in
-//            for (key, value) in params {
-//                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
-//            }
-//
-//            multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
-//            multipartFormData.append(data_thum, withName: "image", fileName: "image.png", mimeType: "image/png")
-//
-//        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
-//            DispatchQueue.main.async {
-//                print(result)
-//            }
-//        }
 //    }
     
     @objc func timerAction() {

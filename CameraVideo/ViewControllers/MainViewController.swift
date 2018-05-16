@@ -130,6 +130,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
     }
     
     func uploadBtnTapped(_ sender: CustomTableViewCell) {
+        guard let tappedIndex = tableView.indexPath(for: sender) else { return }
+        let index = tappedIndex.section
+        let url = urlofVideos[index]
+        let videoUrl = directory.appendingPathComponent(url)
         
     }
     
@@ -163,25 +167,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         cell.cellStruct = VideoInfo(time: time!, address: address!, image: thumb, url: videoofUrl)
         
-//        let removeGesture = UITapGestureRecognizer(target: self, action: #selector(removeGesture(sender: )))
-//        cell.removeBtn.addGestureRecognizer(removeGesture)
-//        let uploadGesture = UITapGestureRecognizer(target: self, action: #selector(uploadGesture(sender: )))
-//        cell.uploadBtn.addGestureRecognizer(uploadGesture)
-//        let shareGesture = UITapGestureRecognizer(target: self, action: #selector(shareGesture(sender: )))
-//        cell.shareBtn.addGestureRecognizer(shareGesture)
         return cell
-    }
-    
-    @objc func removeGesture(sender: UIButton) {
-        
-    }
-    
-    @objc func uploadGesture(sender: UIButton) {
-    
-    }
-    
-    @objc func shareGesture(sender: UIButton) {
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
