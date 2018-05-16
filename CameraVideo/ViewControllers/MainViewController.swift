@@ -11,6 +11,8 @@ import Gradientable
 import MediaPlayer
 import AVKit
 import KYDrawerController
+import Alamofire
+import MBProgressHUD
 
 class MainViewController: UIViewController {
 
@@ -132,9 +134,39 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
     func uploadBtnTapped(_ sender: CustomTableViewCell) {
         guard let tappedIndex = tableView.indexPath(for: sender) else { return }
         let index = tappedIndex.section
-        let url = urlofVideos[index]
-        let videoUrl = directory.appendingPathComponent(url)
+        let filename = urlofVideos[index]
+        let url = directory.appendingPathComponent(filename)
+        let data: Data? = FileManager.default.contents(atPath: url.path)
+        if let mIndex = filename.index(of: "__") {
+            address = String(filename.prefix(upTo: mIndex))
+            address = address?.replacingOccurrences(of: "_", with: " ")
+            time = String(filename.suffix(from: mIndex))
+            time = time?.replacingOccurrences(of: "__", with: "")
+            time = time?.replacingOccurrences(of: ".mp4", with: "")
+            time = time?.replacingOccurrences(of: "_", with: ":")
+        }
+        let user = UserDefaults.standard.string(forKey: kUsername)
+        let params : [String: String] = [
+            "address" : self.address!, //"Ukraine Lviv Ruslan Street",
+            "time" : self.time!,
+            "user" : user!
+        ]
         
+        let progress = MBProgressHUD.showAdded(to: self.view, animated: true)
+        progress.detailsLabel.text = "Uploading video..."
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in params {
+                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
+            }
+            multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
+        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
+            DispatchQueue.main.async {
+                progress.hide(animated: true)
+                self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully uploaded.")
+                print(result)
+            }
+        }
+
     }
     
     func shareBtnTapped(_ sender: CustomTableViewCell) {
