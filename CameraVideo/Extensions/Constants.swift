@@ -28,4 +28,5 @@ struct VideoInfo {
     var time: String
     var address: String
     var image: UIImage
+    var url: URL
 }

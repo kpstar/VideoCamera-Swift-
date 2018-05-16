@@ -13,13 +13,13 @@ class PlayerViewController: AVPlayerViewController {
 
     
     var shareImg = UIImage(named: "share")
+    var url: URL?
     //var videodata =
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let videoURL = URL(string: "http://192.168.0.218/uploads/52551526294374.mp4")
-        let player = AVPlayer(url: videoURL!)
+        let player = AVPlayer(url: url!)
         //let playerLayer = AVPlayerLayer(player: player)
         
         self.player = player

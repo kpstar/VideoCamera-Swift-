@@ -13,9 +13,10 @@
 		084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7720AABA0A00BA233F /* camera_end.wav */; };
 		084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7920AABA1100BA233F /* camera_start.wav */; };
 		084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */; };
+		0894234920AB497A00C8CD16 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234820AB497900C8CD16 /* String+Extension.swift */; };
+		0894234B20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */; };
 		08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E28E20A4D67E006F42FC /* MenuCell.swift */; };
 		08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E29020A51F96006F42FC /* UIColorExtension.swift */; };
-		08C4E29720A58529006F42FC /* tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C4E29620A58529006F42FC /* tree.png */; };
 		08C5A1E920A096500040A2A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C5A1E820A096500040A2A9 /* AppDelegate.swift */; };
 		08C5A1EE20A096500040A2A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C5A1EC20A096500040A2A9 /* Main.storyboard */; };
 		08C5A1F020A096520040A2A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C5A1EF20A096520040A2A9 /* Assets.xcassets */; };
@@ -37,9 +38,10 @@
 		084A5D7720AABA0A00BA233F /* camera_end.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_end.wav; sourceTree = "<group>"; };
 		084A5D7920AABA1100BA233F /* camera_start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_start.wav; sourceTree = "<group>"; };
 		084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		0894234820AB497900C8CD16 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomTableViewCell+Protocol.swift"; sourceTree = "<group>"; };
 		08C4E28E20A4D67E006F42FC /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		08C4E29020A51F96006F42FC /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		08C4E29620A58529006F42FC /* tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.png; sourceTree = "<group>"; };
 		08C5A1E520A096500040A2A9 /* CameraVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C5A1E820A096500040A2A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08C5A1ED20A096500040A2A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				084A5D7220AAB9E500BA233F /* Sound */,
-				08C4E29620A58529006F42FC /* tree.png */,
 				08C4E28D20A4D64E006F42FC /* Custom */,
 				08C5A20220A09DBC0040A2A9 /* Extensions */,
 				08C5A1FB20A096F50040A2A9 /* Delegates */,
@@ -152,6 +153,8 @@
 			children = (
 				08C5A20320A09DE50040A2A9 /* UIViewController+Extension.swift */,
 				08C5A20520A09E820040A2A9 /* Constants.swift */,
+				0894234820AB497900C8CD16 /* String+Extension.swift */,
+				0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -239,7 +242,6 @@
 				084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */,
 				08C5A1F020A096520040A2A9 /* Assets.xcassets in Resources */,
 				08C5A1EE20A096500040A2A9 /* Main.storyboard in Resources */,
-				08C4E29720A58529006F42FC /* tree.png in Resources */,
 				084A5D7620AABA0200BA233F /* camera_end.mp3 in Resources */,
 				084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */,
 			);
@@ -305,10 +307,12 @@
 				08C5A20620A09E820040A2A9 /* Constants.swift in Sources */,
 				084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */,
 				08C5A1FF20A097290040A2A9 /* PasscodeViewController.swift in Sources */,
+				0894234920AB497A00C8CD16 /* String+Extension.swift in Sources */,
 				08C5A22820A21C250040A2A9 /* MenuViewController.swift in Sources */,
 				08C5A1E920A096500040A2A9 /* AppDelegate.swift in Sources */,
 				08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */,
 				08C5A20420A09DE50040A2A9 /* UIViewController+Extension.swift in Sources */,
+				0894234B20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift in Sources */,
 				08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */,
 				08C5A20120A097340040A2A9 /* MainViewController.swift in Sources */,
 				084A5D6F20A9545300BA233F /* PlayerViewController.swift in Sources */,

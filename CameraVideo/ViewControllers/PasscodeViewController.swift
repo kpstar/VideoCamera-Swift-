@@ -58,6 +58,10 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         NotificationCenter.default.addObserver(self, selector: #selector(prints), name: notificationDidEnterBackground, object: nil)
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        videoPreviewLayer?.frame = self.videoLayout.bounds
+    }
 
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
@@ -73,6 +77,53 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     @objc func prints() {
         recordBtn.setTitle("REC", for: .normal)
         stopRecording()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.addressString = ""
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
+                location = locationManager.location
+                ceo.reverseGeocodeLocation(location!, completionHandler:
+                    {(placemarks, error) in
+                        if (error != nil)
+                        {
+                            print("reverse geodcode fail: \(error!.localizedDescription)")
+                        }
+                        let pm = placemarks! as [CLPlacemark]
+                        
+                        if pm.count > 0 {
+                            let pm = placemarks![0]
+                            
+                            if pm.country != nil {
+                                self.addressString = self.addressString + pm.country! + "_"
+                            }
+                            if pm.locality != nil {
+                                self.self.addressString = self.addressString + pm.locality! + "_"
+                            }
+                            if pm.thoroughfare != nil {
+                                self.self.addressString = self.addressString + pm.thoroughfare! + "_"
+                            }
+                            if pm.subLocality != nil {
+                                self.addressString = self.addressString + pm.subLocality!
+                            }
+                        } else {
+                            self.addressString = "noaddress"
+                        }
+                })
+                break
+            case .notDetermined, .restricted, .denied:
+                self.addressString = "noaddress"
+                break
+            }
+        } else {
+            self.addressString = "noaddress__"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +147,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
         
         videoPreview.isHidden = true
         passcodeStackView.isHidden = false
-        videoPreviewLayer?.frame = self.videoLayout.bounds
     }
     
 //    private func callAPIForUploadVideo(url: URL) {
@@ -204,48 +254,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     @IBAction func recordBtnTapped(_ sender: UIButton) {
         if movieOutput.isRecording == false {
             
-            if (CLLocationManager.locationServicesEnabled())
-            {
-                switch CLLocationManager.authorizationStatus() {
-                case .authorizedAlways, .authorizedWhenInUse:
-                    locationManager.delegate = self
-                    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                    locationManager.startUpdatingLocation()
-                    location = locationManager.location
-                    ceo.reverseGeocodeLocation(location!, completionHandler:
-                        {(placemarks, error) in
-                            if (error != nil)
-                            {
-                                print("reverse geodcode fail: \(error!.localizedDescription)")
-                            }
-                            let pm = placemarks! as [CLPlacemark]
-                    
-                            if pm.count > 0 {
-                                let pm = placemarks![0]
-                    
-                                if pm.country != nil {
-                                    self.addressString = self.addressString + pm.country! + "_"
-                                }
-                                if pm.locality != nil {
-                                    self.self.addressString = self.addressString + pm.locality! + "_"
-                                }
-                                if pm.thoroughfare != nil {
-                                    self.self.addressString = self.addressString + pm.thoroughfare! + "_"
-                                }
-                                if pm.subLocality != nil {
-                                    self.addressString = self.addressString + pm.subLocality!
-                                }
-                                self.addressString = self.addressString + "__"
-                                print(self.addressString)
-                            }
-                        })
-                    break
-                case .notDetermined, .restricted, .denied:
-                    self.addressString = "noaddress__"
-                    break
-                }
-            }
-            
             videoPreview.isHidden = false
             passcodeStackView.isHidden = true
             playStartSound()
@@ -283,15 +291,13 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     func tempURL() -> URL? {
         
         let fm = FileManager.default
-        
         let temp = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
         
         let formatter = DateFormatter()
-        // initially set the format based on your datepicker date / server String
         formatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
         
-        let filename = addressString + formatter.string(from: Date()) + ".mp4"
-        
+        let filename = addressString + "__" + formatter.string(from: Date()) + ".mp4"
+        print(filename)
         let directory = temp.appendingPathComponent(filename)
         print(directory)
         return directory
@@ -383,7 +389,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             if captureSession!.canAddOutput(movieOutput) {
                 captureSession!.addOutput(movieOutput)
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resize
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
                 videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 self.videoLayout.layer.addSublayer(videoPreviewLayer!)
                 DispatchQueue.main.async {
