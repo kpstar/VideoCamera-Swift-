@@ -30,6 +30,8 @@ class UploadedVideoViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        
+        data = []
         self.navigationItem.hidesBackButton = false
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.title = "Uploaded Videos"
@@ -55,7 +57,7 @@ class UploadedVideoViewController: UIViewController {
                     temp?.address = object.value(forKey: "address") as! String
                     temp?.createtime = object.value(forKey: "createdate") as! String
                     temp?.httpurl = object.value(forKey: "videofileurl") as! String
-                    temp?.uploadtime = "2018-05-16 09:22:34"
+                    temp?.uploadtime = object.value(forKey: "uploaddate") as! String
                     self.data.append(temp!)
                 }
                 self.tableView.reloadData()
@@ -94,13 +96,28 @@ extension UploadedVideoViewController: UITableViewDelegate, UITableViewDataSourc
     func removeBtnTapped(_ sender: UploadedTableViewCell) {
         guard let tappedIndex = tableView.indexPath(for: sender) else { return }
         let url = self.data[tappedIndex.section].httpurl
-        let videoUrl: URL = URL(string: url)!
         
+        let serverurl = kWebsiteUrl + kRemoveUrl
         
+        let params: [String: String] = ["url": url]
+        
+        Alamofire.request(serverurl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: [:]).responseJSON{ response in
+            print(response)
+            if response.result.value != nil {
+                self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully removed from server.")
+            }
+        }
     }
     
     func shareBtnTapped(_ sender: UploadedTableViewCell) {
-        
+        guard let tappedIndex = tableView.indexPath(for: sender) else { return }
+        let index = tappedIndex.section
+        let url: URL = URL(string: self.data[index].httpurl)!
+        let video = [url]
+        let activityViewController = UIActivityViewController(activityItems: video, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+//        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook,UIActivityType.postToTwitter,UIActivityType.mail]
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     

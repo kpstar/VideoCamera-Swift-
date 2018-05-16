@@ -93,7 +93,6 @@ class MainViewController: UIViewController {
         UserDefaults.standard.set("2", forKey: kCodeStatus)
         drawer?.performSegue(withIdentifier: "Passcode", sender: nil)
         drawer?.setDrawerState(.closed, animated: true)
-        
     }
     
     private func getImageFromUrl(url: URL) -> UIImage? {
