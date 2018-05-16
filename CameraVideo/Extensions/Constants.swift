@@ -22,6 +22,7 @@ let kLoginUrl = "/login"
 let kRegUrl = "/register"
 let kDetail = "/details"
 let kUploadUrl = "/uploadvideo"
+let kGetdataUrl = "/posturls"
 let kToken = "token"
 
 struct VideoInfo {

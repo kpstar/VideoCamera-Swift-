@@ -15,6 +15,8 @@
 		084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */; };
 		0894234920AB497A00C8CD16 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234820AB497900C8CD16 /* String+Extension.swift */; };
 		0894234B20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */; };
+		08B3408420AC48BE008D0DE6 /* UploadedVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B3408320AC48BE008D0DE6 /* UploadedVideoViewController.swift */; };
+		08B3408620AC5BA0008D0DE6 /* UploadedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B3408520AC5BA0008D0DE6 /* UploadedTableViewCell.swift */; };
 		08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E28E20A4D67E006F42FC /* MenuCell.swift */; };
 		08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E29020A51F96006F42FC /* UIColorExtension.swift */; };
 		08C5A1E920A096500040A2A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C5A1E820A096500040A2A9 /* AppDelegate.swift */; };
@@ -40,6 +42,8 @@
 		084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		0894234820AB497900C8CD16 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomTableViewCell+Protocol.swift"; sourceTree = "<group>"; };
+		08B3408320AC48BE008D0DE6 /* UploadedVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedVideoViewController.swift; sourceTree = "<group>"; };
+		08B3408520AC5BA0008D0DE6 /* UploadedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedTableViewCell.swift; sourceTree = "<group>"; };
 		08C4E28E20A4D67E006F42FC /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		08C4E29020A51F96006F42FC /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		08C5A1E520A096500040A2A9 /* CameraVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +94,7 @@
 				08C4E28E20A4D67E006F42FC /* MenuCell.swift */,
 				08C4E29020A51F96006F42FC /* UIColorExtension.swift */,
 				084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */,
+				08B3408520AC5BA0008D0DE6 /* UploadedTableViewCell.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				08C5A20020A097340040A2A9 /* MainViewController.swift */,
 				08C5A22720A21C250040A2A9 /* MenuViewController.swift */,
 				084A5D6E20A9545300BA233F /* PlayerViewController.swift */,
+				08B3408320AC48BE008D0DE6 /* UploadedVideoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -303,7 +309,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08B3408420AC48BE008D0DE6 /* UploadedVideoViewController.swift in Sources */,
 				08C5A1FD20A0971B0040A2A9 /* LogInViewController.swift in Sources */,
+				08B3408620AC5BA0008D0DE6 /* UploadedTableViewCell.swift in Sources */,
 				08C5A20620A09E820040A2A9 /* Constants.swift in Sources */,
 				084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */,
 				08C5A1FF20A097290040A2A9 /* PasscodeViewController.swift in Sources */,

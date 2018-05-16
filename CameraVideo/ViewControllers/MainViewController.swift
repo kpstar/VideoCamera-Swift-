@@ -88,6 +88,14 @@ class MainViewController: UIViewController {
         }
     }
     
+    @IBAction func recordBtnTapped(_ sender: UIButton) {
+        
+        UserDefaults.standard.set("2", forKey: kCodeStatus)
+        drawer?.performSegue(withIdentifier: "Passcode", sender: nil)
+        drawer?.setDrawerState(.closed, animated: true)
+        
+    }
+    
     private func getImageFromUrl(url: URL) -> UIImage? {
         
         do {
@@ -147,7 +155,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
         }
         let user = UserDefaults.standard.string(forKey: kUsername)
         let params : [String: String] = [
-            "address" : self.address!, //"Ukraine Lviv Ruslan Street",
+            "address" : "Ukraine Lviv Azovska",//self.address!, //"Ukraine Lviv Ruslan Street",
             "time" : self.time!,
             "user" : user!
         ]
@@ -171,7 +179,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
     
     func shareBtnTapped(_ sender: CustomTableViewCell) {
         
-    }
+        guard let tappedIndex = tableView.indexPath(for: sender) else { return }
+        let index = tappedIndex.section
+        let filename = urlofVideos[index]
+        let url = directory.appendingPathComponent(filename)
+        let video = [url]
+        let activityViewController = UIActivityViewController(activityItems: video, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        // exclude some activity types from the list (optional)
+        //        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook, UIActivityType.postToTwitter ]
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)    }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {

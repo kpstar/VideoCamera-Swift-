@@ -13,3 +13,8 @@ protocol CustomTableViewCellDelegate : class {
     func uploadBtnTapped(_ sender: CustomTableViewCell)
     func shareBtnTapped(_ sender: CustomTableViewCell)
 }
+
+protocol UploadedTableViewCellDelegate : class {
+    func removeBtnTapped(_ sender: UploadedTableViewCell)
+    func shareBtnTapped(_ sender: UploadedTableViewCell)
+}

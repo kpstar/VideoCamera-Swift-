@@ -127,6 +127,8 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.navigationController?.isNavigationBarHidden = true
         mStatus = UserDefaults.standard.string(forKey: kCodeStatus) ?? "0"
         recordBtn.setTitle("REC", for: .normal)
         

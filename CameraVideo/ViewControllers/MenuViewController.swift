@@ -39,12 +39,18 @@ class MenuViewController: UIViewController {
         
         titleView.set(options: logo1)
         
+        menuList.append(MenuType(name: "My Videos", image: UIImage(named: "myvideo")))
+        menuList.append(MenuType(name: "Uploaded Videos", image: UIImage(named: "uploaded")))
         menuList.append(MenuType(name: "Change Passcode", image: UIImage(named: "passcode")))
         menuList.append(MenuType(name: "Sign Out", image: UIImage(named: "logout")))
     }
     
     @objc func prints() {
         exit(0)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
 }
 
@@ -74,10 +80,19 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-//            drawer?.performSegue(withIdentifier: "segueMain", sender: nil)
-//            drawer?.setDrawerState(.closed, animated: true)
+            drawer?.performSegue(withIdentifier: "Main", sender: nil)
+            drawer?.setDrawerState(.closed, animated: true)
             break
         case 1:
+            drawer?.performSegue(withIdentifier: "uploaded", sender: nil)
+            drawer?.setDrawerState(.closed, animated: true)
+            break
+        case 2:
+            UserDefaults.standard.set("0", forKey: kCodeStatus)
+            drawer?.performSegue(withIdentifier: "Passcode", sender: nil)
+            drawer?.setDrawerState(.closed, animated: true)
+            break
+        case 3:
             let domain = Bundle.main.bundleIdentifier!
             UserDefaults.standard.removePersistentDomain(forName: domain)
             UserDefaults.standard.set("", forKey: kUsername)
