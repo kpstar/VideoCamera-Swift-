@@ -142,7 +142,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
         guard let tappedIndex = tableView.indexPath(for: sender) else { return }
         let index = tappedIndex.section
         let filename = urlofVideos[index]
-        let url = directory.appendingPathComponent(filename)
+        let url: URL = directory.appendingPathComponent(filename)
         let data: Data? = FileManager.default.contents(atPath: url.path)
         if let mIndex = filename.index(of: "__") {
             address = String(filename.prefix(upTo: mIndex))
@@ -166,11 +166,33 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
                 multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
             }
             multipartFormData.append(data!, withName: "video", fileName: "video.mp4", mimeType: "video/mp4")
-        }, to: "http://192.168.0.218/api/uploadvideo", method: .post, headers: nil) { (result) in
-            DispatchQueue.main.async {
-                progress.hide(animated: true)
-                self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully uploaded.")
-                print(result)
+        }, to: "http://18.221.221.116/api/uploadvideo", method: .post, headers: nil) { (result) in
+            
+            switch result {
+                
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    //self.delegate?.showSuccessAlert()
+                    print(response.request!)  // original URL request
+                    print(response.response!) // URL response
+                    print(response.data!)     // server data
+                    print(response.result)   // result of response serialization
+                    //                        self.showSuccesAlert()
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        
+                        DispatchQueue.main.async {
+                            progress.hide(animated: true)
+                            self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully Done")
+                        }
+                    }
+                    
+                }
+                
+            case .failure(let encodingError):
+                //self.delegate?.showFailAlert()
+                print(encodingError)
             }
         }
 

@@ -60,7 +60,9 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     }
     
     override func viewDidLayoutSubviews() {
-        videoPreviewLayer?.frame = self.videoLayout.bounds
+        if videoPreview.isHidden == false {
+            videoPreviewLayer?.frame = self.videoLayout.bounds
+        }
     }
 
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
@@ -237,7 +239,6 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
             }
             
             outputURL = tempURL()
-            try? FileManager.default.removeItem(at: outputURL)
             movieOutput.startRecording(to: outputURL, recordingDelegate: self)
         }
         else {
@@ -320,7 +321,7 @@ class PasscodeViewController: UIViewController, AVCaptureFileOutputRecordingDele
     func loadCamera(type : Int) {
         if(captureSession == nil){
             captureSession = AVCaptureSession()
-            captureSession!.sessionPreset = AVCaptureSession.Preset.high
+            captureSession!.sessionPreset = AVCaptureSession.Preset.medium
         }
         var error: NSError?
         var input: AVCaptureDeviceInput!

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
+import AVFoundation
 
 class LogInViewController: UIViewController {
 
@@ -45,6 +46,14 @@ class LogInViewController: UIViewController {
             let desVC = main.instantiateViewController(withIdentifier: "Passcode") as! PasscodeViewController
             UserDefaults.standard.set("2", forKey: kCodeStatus)
             self.navigationController?.pushViewController(desVC, animated: false)
+        }
+        
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if response {
+                
+            } else {
+                
+            }
         }
     }
     

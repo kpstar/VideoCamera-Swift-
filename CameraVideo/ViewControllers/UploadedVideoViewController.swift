@@ -95,8 +95,8 @@ extension UploadedVideoViewController: UITableViewDelegate, UITableViewDataSourc
     
     func removeBtnTapped(_ sender: UploadedTableViewCell) {
         guard let tappedIndex = tableView.indexPath(for: sender) else { return }
-        let url = self.data[tappedIndex.section].httpurl
-        
+        let urlstr = self.data[tappedIndex.section].httpurl
+        let url = urlstr.replacingOccurrences(of: "http://18.221.221.116/api/uploads/", with: "")
         let serverurl = kWebsiteUrl + kRemoveUrl
         
         let params: [String: String] = ["url": url]
