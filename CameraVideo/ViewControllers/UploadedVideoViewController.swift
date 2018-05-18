@@ -83,7 +83,6 @@ class UploadedVideoViewController: UIViewController {
             return thumbnail
             
         } catch let error {
-            
             print("*** Error generating thumbnail: \(error.localizedDescription)")
             return nil
             
@@ -95,15 +94,21 @@ extension UploadedVideoViewController: UITableViewDelegate, UITableViewDataSourc
     
     func removeBtnTapped(_ sender: UploadedTableViewCell) {
         guard let tappedIndex = tableView.indexPath(for: sender) else { return }
-        let urlstr = self.data[tappedIndex.section].httpurl
-        let url = urlstr.replacingOccurrences(of: "http://18.221.221.116/api/uploads/", with: "")
+        let index = tappedIndex.section
+        let urlstr = self.data[index].httpurl
+        let url = urlstr.replacingOccurrences(of: "http://18.221.221.116/uploads/", with: "")
         let serverurl = kWebsiteUrl + kRemoveUrl
         
         let params: [String: String] = ["url": url]
         
+        let progress = MBProgressHUD.showAdded(to: self.view, animated: true)
+        progress.detailsLabel.text = "Delelting..."
         Alamofire.request(serverurl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: [:]).responseJSON{ response in
             print(response)
+            progress.hide(animated: true)
             if response.result.value != nil {
+                self.data.remove(at: index)
+                self.tableView.reloadData()
                 self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully removed from server.")
             }
         }
