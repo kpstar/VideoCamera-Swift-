@@ -42,6 +42,13 @@ class LogInViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         let mUser : String? = UserDefaults.standard.string(forKey: kUsername) ?? ""
         let mPass : String? = UserDefaults.standard.string(forKey: kPasscode) ?? ""
+        
+        if Connectivity.isConnectedToInternet() {
+            print("Available")
+        } else {
+            print("Unavailable")
+        }
+        
         if mUser != "" && mPass != "" {
             let desVC = main.instantiateViewController(withIdentifier: "Passcode") as! PasscodeViewController
             UserDefaults.standard.set("2", forKey: kCodeStatus)

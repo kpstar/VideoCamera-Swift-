@@ -13,6 +13,7 @@
 		084A5D7820AABA0A00BA233F /* camera_end.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7720AABA0A00BA233F /* camera_end.wav */; };
 		084A5D7A20AABA1100BA233F /* camera_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084A5D7920AABA1100BA233F /* camera_start.wav */; };
 		084A5D7C20AB14F400BA233F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */; };
+		0877BE4F20B06E9500A86DF6 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0877BE4E20B06E9500A86DF6 /* Connectivity.swift */; };
 		0894234920AB497A00C8CD16 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234820AB497900C8CD16 /* String+Extension.swift */; };
 		0894234B20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */; };
 		08B3408420AC48BE008D0DE6 /* UploadedVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B3408320AC48BE008D0DE6 /* UploadedVideoViewController.swift */; };
@@ -40,6 +41,7 @@
 		084A5D7720AABA0A00BA233F /* camera_end.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_end.wav; sourceTree = "<group>"; };
 		084A5D7920AABA1100BA233F /* camera_start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera_start.wav; sourceTree = "<group>"; };
 		084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		0877BE4E20B06E9500A86DF6 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		0894234820AB497900C8CD16 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0894234A20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomTableViewCell+Protocol.swift"; sourceTree = "<group>"; };
 		08B3408320AC48BE008D0DE6 /* UploadedVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedVideoViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				08C4E29020A51F96006F42FC /* UIColorExtension.swift */,
 				084A5D7B20AB14F400BA233F /* CustomTableViewCell.swift */,
 				08B3408520AC5BA0008D0DE6 /* UploadedTableViewCell.swift */,
+				0877BE4E20B06E9500A86DF6 /* Connectivity.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				08C4E29120A51F96006F42FC /* UIColorExtension.swift in Sources */,
 				08C5A20420A09DE50040A2A9 /* UIViewController+Extension.swift in Sources */,
 				0894234B20ABDCAA00C8CD16 /* CustomTableViewCell+Protocol.swift in Sources */,
+				0877BE4F20B06E9500A86DF6 /* Connectivity.swift in Sources */,
 				08C4E28F20A4D67E006F42FC /* MenuCell.swift in Sources */,
 				08C5A20120A097340040A2A9 /* MainViewController.swift in Sources */,
 				084A5D6F20A9545300BA233F /* PlayerViewController.swift in Sources */,
@@ -469,9 +473,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E4PA39JM22;
+				DEVELOPMENT_TEAM = BBJD87GN28;
 				INFOPLIST_FILE = CameraVideo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -489,9 +493,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E4PA39JM22;
+				DEVELOPMENT_TEAM = BBJD87GN28;
 				INFOPLIST_FILE = CameraVideo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

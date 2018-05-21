@@ -20,7 +20,7 @@ class PlayerViewController: AVPlayerViewController {
         let player = AVPlayer(url: url!)
         self.player = player
         shareImg = shareImg?.withRenderingMode(.alwaysOriginal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: shareImg, style: .plain, target: self, action: #selector(shareVideo))
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: shareImg, style: .plain, target: self, action: #selector(shareVideo))
     
     }
     

@@ -154,7 +154,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
         }
         let user = UserDefaults.standard.string(forKey: kUsername)
         let params : [String: String] = [
-            "address" : "Ukraine Lviv Azovska",//self.address!, //"Ukraine Lviv Ruslan Street",
+            "address" : self.address!, //"Ukraine Lviv Ruslan Street",
             "time" : self.time!,
             "user" : user!
         ]
@@ -172,12 +172,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, Custom
                 
             case .success(let upload, _, _):
                 upload.responseJSON { response in
-                    //self.delegate?.showSuccessAlert()
-                    print(response.request!)  // original URL request
-                    print(response.response!) // URL response
-                    print(response.data!)     // server data
-                    print(response.result)   // result of response serialization
-                    //                        self.showSuccesAlert()
                     
                     if let JSON = response.result.value {
                         print("JSON: \(JSON)")

@@ -106,11 +106,9 @@ extension UploadedVideoViewController: UITableViewDelegate, UITableViewDataSourc
         Alamofire.request(serverurl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: [:]).responseJSON{ response in
             print(response)
             progress.hide(animated: true)
-            if response.result.value != nil {
-                self.data.remove(at: index)
-                self.tableView.reloadData()
-                self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully removed from server.")
-            }
+            self.data.remove(at: index)
+            self.tableView.reloadData()
+            self.displayMyAlertMessage(titleMsg: "Success", alertMsg: "Successfully removed from server.")
         }
     }
     
